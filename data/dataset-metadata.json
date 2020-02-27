@@ -1,0 +1,19 @@
+{
+  "title": "Medium Daily Digests",
+  "id": "ioexception/medium-daily-digests",
+  "licenses": [
+    {
+      "name": "CC-BY-SA-4.0"
+    }
+  ],
+  "resources": [
+    {
+      "path": "accounts.csv",
+      "description": "Accounts and the topics I subscribed to"
+    },
+    {
+      "path": "mails.csv",
+      "description": "All the articles I have received so far"
+    }
+  ]
+}
