@@ -1,6 +1,13 @@
 {
-  "title": "Medium Daily Digests",
   "id": "ioexception/medium-daily-digests",
+  "title": "Medium Daily Digests",
+  "subtitle": "I subscribed to the Medium Daily Digests so you don't have to",
+  "description": "This dataset contains information about the emails that Medium has sent me as newsletters since about the end of january 2020. I subscribed to their news letters using 20 different accounts, each account indicating different topics of interest.",
+  "keywords": [
+      "web sites",
+      "email and messaging",
+      "blogging resources and services"
+  ],
   "licenses": [
     {
       "name": "CC-BY-SA-4.0"
@@ -9,11 +16,195 @@
   "resources": [
     {
       "path": "accounts.csv",
-      "description": "Accounts and the topics I subscribed to"
+      "description": "Accounts and the topics I subscribed to",
+      "schema": {
+        "fields": [
+          {
+              "name": "account",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "topic1",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "topic2",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "topic3",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "topic4",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "topic5",
+              "description": null,
+              "type": "string"
+          }
+        ]
+      }
     },
     {
       "path": "mails.csv",
-      "description": "All the articles I have received so far"
+      "description": "All the mails I have received so far",
+      "schema": {
+        "fields": [
+          {
+              "name": "id",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "date",
+              "description": null,
+              "type": "datetime"
+          },
+          {
+              "name": "to",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "from",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "subject",
+              "description": null,
+              "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "path": "articles_details.csv",
+      "description": "More in depth details of -some- articles",
+      "schema": {
+        "fields": [
+          {
+              "name": "url",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "title",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "subtitle",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "tags",
+              "description": "tags assigned to the article, separated by pipe",
+              "type": "string"
+          },
+          {
+              "name": "minutes_read",
+              "description": "the read minutes suggested by medium",
+              "type": "number"
+          },
+          {
+              "name": "claps",
+              "description": "number of claps awarded to this post, as a string",
+              "type": "string"
+          },
+          {
+              "name": "comments",
+              "description": "number of comments for this post",
+              "type": "number"
+          },
+          {
+              "name": "year",
+              "description": "year of publication",
+              "type": "number"
+          },
+          {
+              "name": "month",
+              "description": "abbreviation of the month of publication",
+              "type": "number"
+          },
+          {
+              "name": "day",
+              "description": null,
+              "type": "number"
+          },
+          {
+              "name": "scrape_date",
+              "description": "day the scrape happened",
+              "type": "datetime"
+          }
+        ]
+      }
+    },
+    {
+      "path": "articles_mails.csv",
+      "description": "All the articles I have received so far",
+      "schema": {
+        "fields": [
+          {
+              "name": "mail_id",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "post_url",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "post_title",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "post_subtitle",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "section_title",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "members_only",
+              "description": null,
+              "type": "boolean"
+          },
+          {
+              "name": "author_name",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "author_handle",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "site_name",
+              "description": null,
+              "type": "string"
+          },
+          {
+              "name": "site_slug",
+              "description": null,
+              "type": "string"
+          }
+        ]
+      }
     }
   ]
 }

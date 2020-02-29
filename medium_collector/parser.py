@@ -1,56 +1,69 @@
-from bs4 import BeautifulSoup
-import quopri
+import datetime
 import email
 import hashlib
-import datetime
+import quopri
+
+from bs4 import BeautifulSoup
 
 MEDIUM_URL = "https://medium.com/"
 URL_LEN = len(MEDIUM_URL)
+
 
 def get_subject(subject):
     subject_parts = []
     subjects = email.header.decode_header(subject)
     for content, encoding in subjects:
-        try: 
+        try:
             subject_parts.append(content.decode(encoding or "utf8"))
         except:
             subject_parts.append(content)
 
     return "".join(subject_parts)
 
-def read_email(email_message):
-    parts = { part.get_content_type(): part for part in email_message.get_payload() }
-    decoded = quopri.decodestring(parts["text/html"].get_payload()).decode("utf8")
-    extra_info = {
-        "to": hashlib.sha1(email_message.get("To").encode()).hexdigest(), 
-        "from": email_message.get("From"),
-        "subject": get_subject(email_message.get('Subject')),
-        "date": datetime.datetime.strptime(email_message.get("Date"), "%a, %d %b %Y %H:%M:%S +0000 (%Z)")
-    }
-    results = parse(decoded, **extra_info)
-    return results
 
-def parse(message, **kwargs):
+def parse_mail(email_message):
+    parts = {part.get_content_type(): part for part in email_message.get_payload()}
+    decoded = quopri.decodestring(parts["text/html"].get_payload()).decode("utf8")
+    to_encoded = email_message.get("To").encode()
+    message_id = email_message["Message-ID"].encode()
+    sha1 = hashlib.sha1()
+    sha1.update(to_encoded)
+    sha1.update(message_id)
+    mail_info = {
+        "id": sha1.hexdigest(),
+        "to": hashlib.sha1(to_encoded).hexdigest(),
+        "from": email_message.get("From"),
+        "subject": get_subject(email_message.get("Subject")),
+        "date": datetime.datetime.strptime(
+            email_message.get("Date"), "%a, %d %b %Y %H:%M:%S +0000 (%Z)"
+        ),
+    }
+    return mail_info, decoded
+
+
+def get_articles(message):
     soup = BeautifulSoup(message, "lxml")
-    main = soup.find("table", {"class":"email-fillWidth"})
-    digest = main.find("table", {"class":"email-digest"})
+    main = soup.find("table", {"class": "email-fillWidth"})
+    digest = main.find("table", {"class": "email-digest"})
 
     sections = digest.find_all("tr", recursive=False)
 
     for section in sections:
-        [td] = section.findChildren("td", recursive=False)
-        section_title_div = td.find("div")
+        [table_cell] = section.findChildren("td", recursive=False)
+        section_title_div = table_cell.find("div")
 
         if section_title_div is None:
             continue
 
         section_title = section_title_div.text
 
-        article_tables = td.findChildren("table", recursive=False)
-        
+        article_tables = table_cell.findChildren("table", recursive=False)
+
         for article in article_tables:
-            post_title = article.find("div", {"class":"email-digestPostTitle--hero"}) or article.find("div", {"class":"email-digestPostTitle"})
-            post_subtitle = article.find("div", {"class":"email-digestPostSubtitle"})
+            post_title = article.find(
+                "div", {"class": "email-digestPostTitle--hero"}
+            ) or article.find("div", {"class": "email-digestPostTitle"})
+            post_subtitle = article.find("div", {"class": "email-digestPostSubtitle"})
 
             post_url, _, _ = post_title.parent.find("a")["href"].partition("?")
 
@@ -60,16 +73,17 @@ def parse(message, **kwargs):
 
             for anchor in anchors:
                 url = anchor["href"][URL_LEN:]
-                first, _, rest = url.partition("?")
+                first, _, _ = url.partition("?")
                 if first.startswith("@"):
                     author = (anchor.text, first)
                 else:
                     site = (anchor.text, first)
 
-            members_only = article.find("img", {"class":"email-digestMemberOnlyStar"}) is not None
+            members_only = (
+                article.find("img", {"class": "email-digestMemberOnlyStar"}) is not None
+            )
 
             data = {
-                **kwargs,
                 "section_title": section_title,
                 "post_title": post_title.text,
                 "post_subtitle": post_subtitle.text if bool(post_subtitle) else None,
@@ -78,6 +92,6 @@ def parse(message, **kwargs):
                 "author_handle": author[1],
                 "site_name": site[0],
                 "site_slug": site[1],
-                "members_only": members_only
+                "members_only": members_only,
             }
             yield data
