@@ -17,21 +17,27 @@ def get_subject(subject):
             subject_parts.append(content.decode(encoding or "utf8"))
         except:
             subject_parts.append(content)
-
     return "".join(subject_parts)
+
+
+def get_message_id(to, message_id):
+    sh1 = hashlib.sha1()
+    sh1.update(to.encode())
+    sh1.update(message_id.encode())
+    return sh1.hexdigest()
+
+
+def mask_to(to):
+    return hashlib.sha1(to.encode()).hexdigest()
 
 
 def parse_mail(email_message):
     parts = {part.get_content_type(): part for part in email_message.get_payload()}
     decoded = quopri.decodestring(parts["text/html"].get_payload()).decode("utf8")
-    to_encoded = email_message.get("To").encode()
-    message_id = email_message["Message-ID"].encode()
-    sha1 = hashlib.sha1()
-    sha1.update(to_encoded)
-    sha1.update(message_id)
+    to = email_message["To"]
     mail_info = {
-        "id": sha1.hexdigest(),
-        "to": hashlib.sha1(to_encoded).hexdigest(),
+        "id": get_message_id(to, email_message["Message-ID"]),
+        "to": mask_to(to),
         "from": email_message.get("From"),
         "subject": get_subject(email_message.get("Subject")),
         "date": datetime.datetime.strptime(
