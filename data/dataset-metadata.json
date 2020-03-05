@@ -86,69 +86,6 @@
       }
     },
     {
-      "path": "articles_details.csv",
-      "description": "More in depth details of -some- articles",
-      "schema": {
-        "fields": [
-          {
-              "name": "url",
-              "description": null,
-              "type": "string"
-          },
-          {
-              "name": "title",
-              "description": null,
-              "type": "string"
-          },
-          {
-              "name": "subtitle",
-              "description": null,
-              "type": "string"
-          },
-          {
-              "name": "tags",
-              "description": "tags assigned to the article, separated by pipe",
-              "type": "string"
-          },
-          {
-              "name": "minutes_read",
-              "description": "the read minutes suggested by medium",
-              "type": "number"
-          },
-          {
-              "name": "claps",
-              "description": "number of claps awarded to this post, as a string",
-              "type": "string"
-          },
-          {
-              "name": "comments",
-              "description": "number of comments for this post",
-              "type": "number"
-          },
-          {
-              "name": "year",
-              "description": "year of publication",
-              "type": "number"
-          },
-          {
-              "name": "month",
-              "description": "abbreviation of the month of publication",
-              "type": "number"
-          },
-          {
-              "name": "day",
-              "description": null,
-              "type": "number"
-          },
-          {
-              "name": "scrape_date",
-              "description": "day the scrape happened",
-              "type": "datetime"
-          }
-        ]
-      }
-    },
-    {
       "path": "articles_mails.csv",
       "description": "All the articles I have received so far",
       "schema": {

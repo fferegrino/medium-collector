@@ -3,7 +3,7 @@ from unittest.mock import ANY
 
 import pytest
 
-from medium_collector.parser import get_subject, parse_mail
+from medium_collector.download.parser import get_subject, parse_mail
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText

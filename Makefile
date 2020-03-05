@@ -6,7 +6,7 @@ SOURCES_FOLDER=medium_collector
 DATE=$(shell date "+%d %B of %Y at %H:%M")
 
 download:
-	$(POETRY_RUN) python -m medium_collector download-from-mail
+	$(POETRY_RUN) python -m medium_collector from-mail
 
 version:
 	$(POETRY_RUN) kaggle datasets version -p data -m "Data update $(DATE)"
