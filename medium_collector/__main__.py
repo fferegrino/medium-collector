@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime
 from pathlib import Path
 
@@ -9,19 +10,24 @@ from medium_collector.s3 import upload_files
 
 
 @click.group()
-def cli():
-    pass
+@click.option("--debug", is_flag=True, default=False)
+def cli(debug):
+    if debug:
+        logging.basicConfig(level=logging.DEBUG)
 
 
 @cli.command()
-def from_mail():
+@click.option("--dry-run", is_flag=True, default=False)
+def from_mail(dry_run):
     message = datetime.now().strftime("%A, %B %e, %Y")
     data_path = Path("data")
     if not data_path.exists():
         data_path.mkdir()
-    download.download_from_mail(data_path)
-    upload_files(data_path)
-    upload_to_kaggle(data_path, message)
+
+    download.download_from_mail(data_path, dry_run)
+    if not dry_run:
+        upload_files(data_path)
+        upload_to_kaggle(data_path, message)
 
 
 if __name__ == "__main__":

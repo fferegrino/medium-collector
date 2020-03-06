@@ -30,7 +30,7 @@ def write_checkpoint(data_path, checkpoint):
         writable.write("\n")
 
 
-def download_from_mail(data_path):
+def download_from_mail(data_path, dry_run=False):
     emails_csv = Path(data_path, "mails.csv")
     email_articles_csv = Path(data_path, "articles_mails.csv")
 
@@ -49,9 +49,12 @@ def download_from_mail(data_path):
         "INBOX.Daily Digests",
         checkpoint=checkpoint,
     )
-
-    new_checkpoint = write_emails(emails_csv, email_articles_csv, messages)
-    new_checkpoint = max(checkpoint, new_checkpoint)
+    if dry_run:
+        logger.info("this is a dry run")
+        new_checkpoint = checkpoint
+    else:
+        new_checkpoint = write_emails(emails_csv, email_articles_csv, messages)
+        new_checkpoint = max(checkpoint, new_checkpoint)
 
     write_checkpoint(data_path, new_checkpoint)
     logger.info("done pulling messages, the new checkpoint is %d" % new_checkpoint)

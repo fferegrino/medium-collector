@@ -5,6 +5,9 @@ description = ""
 authors = ["Antonio Feregrino <antonio.feregrino@gmail.com>"]
 license = "MIT"
 
+[tool.poetry.scripts]
+collect = 'medium_collector.__main__:cli'
+
 [tool.poetry.dependencies]
 python = "^3.7"
 beautifulsoup4 = "^4.8"
