@@ -13,7 +13,7 @@ from medium_collector.s3 import upload_files
 @click.option("--debug", is_flag=True, default=False)
 def cli(debug):
     if debug:
-        logging.basicConfig(level=logging.DEBUG)
+        logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 
 @cli.command()
