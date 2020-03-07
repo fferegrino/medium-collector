@@ -2,7 +2,7 @@
   "id": "ioexception/medium-daily-digests",
   "title": "Medium Daily Digests",
   "subtitle": "I subscribed to the Medium Daily Digests so you don't have to",
-  "description": "This dataset contains information about the emails that Medium has sent me as newsletters since about the end of january 2020. I subscribed to their news letters using 20 different accounts, each account indicating different topics of interest.",
+  "description": "## Background (or why did I do this)\\n\\nI have been trying to create a dataset related to Medium posts, despite there [being](https://www.kaggle.com/harrisonjansma/medium-stories) some [already](https://www.kaggle.com/hsankesara/medium-articles/kernels) out there. However, it seems that they are focused on certain topics, or just too small; I wanted my dataset to be something different but still related to Medium.\\n\\nAs for the data, I am certainly not sure about whether the dataset will be helpful to anyone, but I hope the way I built it with Python will be useful for anyone with more critical data out there.\\n\\nPS: Here is an explanation on how I achieved the automatisation of this dataset construction: [Automated dataset generation with Python](https://dev.to/fferegrino/how-to-automate-dataset-creation-with-python-171a)\\n\\n## Data source and collection\\n\\nSo if I wanted my dataset to be unique and different, I had to do something extra. At first, I thought of massively scraping posts from Medium; the problem is that they do not provide an easy to crawl, easy to scrape website\\u2026 then I thought about that *\"Medium Daily Digest\"* that I get every day, in it, Medium sends me stories that \"I may be interested in\"; Going back to when I subscribed to it I remember having to choose my interests among several topics.\\n\\nWith that in mind I set out to create 20 different email accounts (in reality they are aliases to a single account) and then use each one of them to subscribe to this infamous *\"Medium Daily Digest\"*, each account associated with five different (but somehow related as judged by me) topics. And ever since then I have been receiving 20 emails, every single day with titles, subtitles images and juicy urls.\\n\\nEvery now and then I log in to those accounts, open a few emails to prevent said accounts to be trimmed from Medium's syndication because [they know when you are not opening their emails](https://www.theverge.com/2019/7/3/20681508/tracking-pixel-email-spying-superhuman-web-beacon-open-tracking-read-receipts-location) but nothing major. It is also expected that the topics they offer may change over time, and at some point the interest of some accounts may chang,  then I'll have to log into Medium and do it myself manually, but for the most part the data collection runs on its own.",
   "keywords": [
       "web sites",
       "email and messaging",
@@ -59,27 +59,27 @@
         "fields": [
           {
               "name": "id",
-              "description": null,
+              "description": "a unique identifier of the email",
               "type": "string"
           },
           {
               "name": "date",
-              "description": null,
+              "description": "the datetime when the email was received",
               "type": "datetime"
           },
           {
               "name": "to",
-              "description": null,
+              "description": "a hash of the email account this email was delivered to",
               "type": "string"
           },
           {
               "name": "from",
-              "description": null,
+              "description": "the email account used to send the email (it is always the same)",
               "type": "string"
           },
           {
               "name": "subject",
-              "description": null,
+              "description": "the subject of the email",
               "type": "string"
           }
         ]
@@ -92,52 +92,52 @@
         "fields": [
           {
               "name": "mail_id",
-              "description": null,
+              "description": "a unique identifier of the email this article came from, corresponds to one of id in the mails.csv file",
               "type": "string"
           },
           {
               "name": "post_url",
-              "description": null,
+              "description": "the Medium url of the article",
               "type": "string"
           },
           {
               "name": "post_title",
-              "description": null,
+              "description": "the title of the article",
               "type": "string"
           },
           {
               "name": "post_subtitle",
-              "description": null,
+              "description": "the subtitle of the article",
               "type": "string"
           },
           {
               "name": "section_title",
-              "description": null,
+              "description": "the title of the section the post was listed under",
               "type": "string"
           },
           {
               "name": "members_only",
-              "description": null,
+              "description": "a boolean flag that specifies whether the article is for members of Medium",
               "type": "boolean"
           },
           {
               "name": "author_name",
-              "description": null,
+              "description": "name of the article's author",
               "type": "string"
           },
           {
               "name": "author_handle",
-              "description": null,
+              "description": "handle of the article's author",
               "type": "string"
           },
           {
               "name": "site_name",
-              "description": null,
+              "description": "if the article was published under a site, this contains the name of such site",
               "type": "string"
           },
           {
               "name": "site_slug",
-              "description": null,
+              "description": "if the article was published under a site, this contains the handle of such site",
               "type": "string"
           }
         ]
